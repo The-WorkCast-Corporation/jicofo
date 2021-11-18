@@ -583,7 +583,13 @@ public class JitsiMeetConferenceImpl
     {
         synchronized (participantLock)
         {
-            logger.info("Member joined:" + chatRoomMember.getName());
+            logger.info("Member joined:" + chatRoomMember.toString());
+
+            if (chatRoomMember.getJid().getLocalpartOrNull() !=null && "recorder".equals(chatRoomMember.getJid().getLocalpartOrNull().asUnescapedString())){
+                JibriSession jibriSession = this.jibriRecorder.getJibriSessions().get(0);
+                jibriSession.markStarted();
+            }
+
             getFocusManager().getStatistics().totalParticipants.incrementAndGet();
             hasHadAtLeastOneParticipant = true;
 
@@ -1045,7 +1051,13 @@ public class JitsiMeetConferenceImpl
     {
         synchronized (participantLock)
         {
-            logger.info("Member left:" + chatRoomMember.getName());
+            logger.info("Member left:" + chatRoomMember.toString());
+
+            if (chatRoomMember.getJid().getLocalpartOrNull() !=null && "recorder".equals(chatRoomMember.getJid().getLocalpartOrNull().asUnescapedString())){
+                JibriSession jibriSession = this.jibriRecorder.getJibriSessions().get(0);
+                jibriSession.markStopped();
+            }
+
             Participant leftParticipant = findParticipantForChatMember(chatRoomMember);
             if (leftParticipant != null)
             {
