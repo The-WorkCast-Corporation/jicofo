@@ -1,0 +1,15 @@
+---
+- name: Test name
+  hosts: all
+  tasks:
+  - name: Get jicofo from s3
+    amazon.aws.aws_s3:
+      bucket: "{{ BUCKET_LOCATION }}"
+      object: "{{ OBJECT_LOCATION }}"
+      dest: /usr/share/jicofo/jicofo.jar
+      mode: get
+      overwrite: different
+  - name: Restart service jicofo
+    ansible.builtin.service:
+      name: jicofo
+      state: restarted
