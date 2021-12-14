@@ -13,7 +13,7 @@ env:
   RELEASE_JAVA_VERSION: 8
 
 jobs:
-  build:
+  deployment-trialist3:
     runs-on: ubuntu-latest
     environment: TRIALIST3_PRODUCTION
     strategy:
@@ -25,6 +25,39 @@ jobs:
       REGION: us-east-1
       VERSION: v0.0.3
       TAG_CLIENT: trialist3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+          cache: maven
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.ACCESS_KEY }}
+          aws-region: ${{ env.REGION }}
+      - name: Build and test with Maven
+        run: mvn verify -B -Pcoverage
+
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v2
+      - run: ./build-deploy.sh -v ${{ env.VERSION }} -b ${{ secrets.BUCKET }} -c ${{ env.TAG_CLIENT }}
+  deployment-trialist2:
+    runs-on: ubuntu-latest
+    environment: TRIALIST2_PRODUCTION
+    strategy:
+      matrix:
+        java: [ 11 ]
+
+    name: Java ${{ matrix.java }}
+    env:
+      REGION: us-east-1
+      VERSION: v0.0.3
+      TAG_CLIENT: trialist2
     steps:
       - name: Checkout
         uses: actions/checkout@v2
