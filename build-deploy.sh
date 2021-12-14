@@ -4,7 +4,7 @@ PLAYBOOK_FILE="./jicofo-build.yml"
 LOCAL_BUILD="./target/jicofo-1.1-SNAPSHOT-jar-with-dependencies.jar"
 REGION="us-east-1"
 TAG_TYPE="jitsi"
-TAG_CLIENT="trialist3"
+TAG_CLIENT="trialist2"
 
 while getopts v:b:l:c: flag
 do
