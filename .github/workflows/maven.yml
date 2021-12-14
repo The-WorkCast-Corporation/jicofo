@@ -18,7 +18,7 @@ jobs:
     environment: TRIALIST3_PRODUCTION
     strategy:
       matrix:
-        java: [ 8, 11, 17 ]
+        java: [ 11 ]
 
     name: Java ${{ matrix.java }}
     env:
@@ -35,7 +35,11 @@ jobs:
           distribution: temurin
           java-version: ${{ matrix.java }}
           cache: maven
-
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.ACCESS_KEY }}
+          aws-region: ${{ env.REGION }}
       - name: Build and test with Maven
         run: mvn verify -B -Pcoverage
 
