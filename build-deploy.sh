@@ -25,7 +25,7 @@ PARAMETERS="{ \"playbook\": [\"${PLAYBOOK}\"],\"playbookurl\": [\"\"],\"extravar
 
 COMMAND_ID=`aws ssm send-command --document-name "AWS-RunAnsiblePlaybook" --targets "[{\"Key\":\"tag:Type\",\"Values\":[\"${TAG_TYPE}\"]}, {\"Key\":\"tag:Client\",\"Values\":[\"${TAG_CLIENT}\"]}]" --document-version "1" --parameters "$PARAMETERS" --timeout-seconds 600 --max-concurrency "50" --max-errors "0" --region us-east-1 --query "Command.CommandId" | tr -d '"'`
 
-echo $COMMAND_ID
+#echo $COMMAND_ID
 
 while true;
 do
@@ -36,10 +36,10 @@ do
   # do
   #   echo "$out"
   # done
-  echo ${RESPONSES[@]}
+  #echo ${RESPONSES[@]}
   for res in "${RESPONSES[@]}"
   do
-    echo "$res"
+    #echo "$res"
     if [ "$res" != "0" ]; then
       echo "Waiting..."
       IS_INCOMPLETE=true
