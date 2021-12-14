@@ -24,6 +24,7 @@ jobs:
     env:
       REGION: us-east-1
       VERSION: v0.0.3
+      TAG_CLIENT: trialist3
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -40,4 +41,4 @@ jobs:
 
       - name: Upload coverage report
         uses: codecov/codecov-action@v2
-      - run: ./build-deploy.sh -v ${{ env.VERSION }} -b ${{ secrets.BUCKET }}
+      - run: ./build-deploy.sh -v ${{ env.VERSION }} -b ${{ secrets.BUCKET }} -c ${{ env.TAG_CLIENT }}
