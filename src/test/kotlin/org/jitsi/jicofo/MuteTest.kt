@@ -20,7 +20,7 @@ import io.kotest.matchers.shouldBe
 import mock.MockParticipant
 import mock.util.TestConference
 import org.jitsi.jicofo.conference.MuteResult.NOT_ALLOWED
-import org.jitsi.jicofo.conference.MuteResult.SUCCESS
+// import org.jitsi.jicofo.conference.MuteResult.SUCCESS
 import org.jitsi.jicofo.xmpp.muc.MemberRole
 import org.jitsi.utils.MediaType
 import org.jxmpp.jid.impl.JidCreate
