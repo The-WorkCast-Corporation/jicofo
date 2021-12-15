@@ -163,10 +163,12 @@ abstract class BaseJibri internal constructor(
             return error(iq, StanzaError.Condition.bad_request, "undefined action")
         }
 
-        verifyModeratorRole(iq)?.let {
-            logger.warn("Ignored Jibri request from non-moderator.")
-            return IQ.createErrorResponse(iq, it)
-        }
+        // verifyModeratorRole(iq)?.let {
+        //     logger.warn("Ignored Jibri request from non-moderator.")
+        //     return IQ.createErrorResponse(iq, it)
+        // }
+
+        logger.info("Will attempt to start a Jibri session for ALL user types: ${iq.toXML()}")
 
         return when {
             iq.action == Action.START && session == null -> handleStartRequest(iq)
