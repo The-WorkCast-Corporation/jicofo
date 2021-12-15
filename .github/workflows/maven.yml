@@ -6,7 +6,7 @@ name: Deployment
 on:
   push:
     branches:
-      - feature/*
+      - master
 
 env:
   # Java version to use for the release
